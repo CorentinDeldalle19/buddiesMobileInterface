@@ -59,7 +59,7 @@ class Event extends StatelessWidget {
           ),
           // Titre et sous-titre en premier plan
           Positioned(
-            top: MediaQuery.of(context).padding.top + 20,
+            top: MediaQuery.of(context).padding.top + MediaQuery.of(context).size.height * 0.025,
             left: 40,
             right: 20,
             child: Column(
@@ -140,7 +140,9 @@ class Event extends StatelessWidget {
                 ),
                 SizedBox(height: 15),
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(
+                      MediaQuery.of(context).size.width * 0.025
+                  ),
                   margin: EdgeInsets.only(
                     right: MediaQuery.of(context).size.width * 0.2
                   ),
