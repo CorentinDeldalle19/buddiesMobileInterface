@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'Event.dart'; // Import du widget Event
+import 'Event.dart';
+import 'EventMain.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,24 +18,76 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+// ✅ Composant réutilisable pour la barre de navigation
+class CustomBottomNavBar extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onTap;
 
-  final String title;
+  const CustomBottomNavBar({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: const Color.fromRGBO(20, 20, 20, 1),
+      currentIndex: currentIndex,
+      onTap: onTap,
+      items: [
+        BottomNavigationBarItem(
+          icon: Image.asset('assets/home-modified.png', width: 24, height: 24),
+          label: ' ',
+        ),
+        BottomNavigationBarItem(
+          icon: Image.asset('assets/festival-modified.png', width: 24, height: 24),
+          label: ' ',
+        ),
+        BottomNavigationBarItem(
+          icon: Image.asset('assets/messenger-modified.png', width: 24, height: 24),
+          label: ' ',
+        ),
+        BottomNavigationBarItem(
+          icon: Image.asset('assets/user-modified.png', width: 24, height: 24),
+          label: ' ',
+        ),
+      ],
+    );
+  }
+}
+
+// ✅ Page principale avec navigation entre les écrans
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0; // Variable pour suivre l'index de l'élément sélectionné
+  int _selectedIndex = 0; // Index de la page sélectionnée
 
-  // Fonction pour changer l'index de la navigation
+  // Liste des pages associées aux éléments du BottomNavigationBar
+  final List<Widget> _pages = [
+    Event(
+      title: "50 CENT",
+      subtitle: "En concert à Paris !",
+      description: "🔈 Le légendaire rappeur, producteur et entrepreneur 50 Cent revient à Paris pour un événement inoubliable !",
+      date: "🗓️ Dimanche 13 juillet 2025",
+    ),
+    EventMain(), // Page associée à l'icône Festival
+    Container(color: Colors.blue), // Placeholder pour Messenger
+    Container(color: Colors.green), // Placeholder pour Profil
+  ];
+
+  // Fonction pour changer de page
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -55,41 +108,11 @@ class _MyHomePageState extends State<MyHomePage> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Event(
-              title: "50 CENT",
-              subtitle: "En concert à Paris !",
-              description: "🔈 Le légendaire rappeur, producteur et entrepreneur 50 Cent revient à Paris pour un événement inoubliable !",
-              date: "🗓️ Dimanche 13 juillet 2025",
-            ),
-          ],
-        ),
+        child: _pages[_selectedIndex],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Color.fromRGBO(20, 20, 20, 1),
-        currentIndex: _selectedIndex, // L'index actuellement sélectionné
-        onTap: _onItemTapped, // Fonction pour gérer l'événement de tap
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Image.asset('assets/home-modified.png', width: 24, height: 24),
-            label: ' ',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset('assets/festival-modified.png', width: 24, height: 24),
-            label: ' ',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset('assets/messenger-modified.png', width: 24, height: 24),
-            label: ' ',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset('assets/user-modified.png', width: 24, height: 24),
-            label: ' ',
-          ),
-        ],
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
