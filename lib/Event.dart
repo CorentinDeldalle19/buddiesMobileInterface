@@ -141,7 +141,9 @@ class Event extends StatelessWidget {
                 SizedBox(height: 15),
                 Container(
                   padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.only(right: 90),
+                  margin: EdgeInsets.only(
+                    right: MediaQuery.of(context).size.width * 0.2
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.6), // Fond noir semi-transparent
                     borderRadius: BorderRadius.circular(8),
