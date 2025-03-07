@@ -48,7 +48,7 @@ class Event extends StatelessWidget {
             opacity: 0.75,
             child: Container(
               width: double.infinity,
-              height: 832, // Légère réduction de la hauteur pour remonter l'ensemble
+              height: 855, // Légère réduction de la hauteur pour remonter l'ensemble
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/50cent.jpeg'),
@@ -60,7 +60,7 @@ class Event extends StatelessWidget {
           // Titre et sous-titre en premier plan
           Positioned(
             top: MediaQuery.of(context).padding.top + MediaQuery.of(context).size.height * 0.025,
-            left: 40,
+            left: MediaQuery.of(context).size.height * 0.02,
             right: 20,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

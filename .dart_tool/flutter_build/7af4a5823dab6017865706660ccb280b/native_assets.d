@@ -1,0 +1,1 @@
+ /Users/corentindeldalle/Desktop/buddiesMobileInterface/.dart_tool/flutter_build/7af4a5823dab6017865706660ccb280b/native_assets.yaml: 
