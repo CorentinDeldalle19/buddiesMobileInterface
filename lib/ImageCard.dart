@@ -16,7 +16,7 @@ class ImageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 350,
-      height: 200, // Ajustement de la hauteur pour mieux gérer le texte
+      height: 200,
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

@@ -71,6 +71,13 @@ class Event extends StatelessWidget {
                     fontSize: 58,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Color.fromRGBO(1, 1, 1, 0.6),
+                        offset: Offset(7.0, 5.0),
+                        blurRadius: 20.0,
+                      ),
+                    ],
                   ),
                 ),
                 Text(
@@ -79,6 +86,13 @@ class Event extends StatelessWidget {
                     fontSize: 22,
                     fontWeight: FontWeight.w400,
                     color: Colors.white70,
+                    shadows: [
+                      Shadow(
+                        color: Color.fromRGBO(1, 1, 1, 0.6),
+                        offset: Offset(7.0, 5.0),
+                        blurRadius: 20.0,
+                      ),
+                    ],
                   ),
                 ),
               ],

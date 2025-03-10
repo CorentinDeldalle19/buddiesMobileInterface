@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// ✅ Composant réutilisable pour la barre de navigation
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
@@ -63,7 +62,6 @@ class CustomBottomNavBar extends StatelessWidget {
   }
 }
 
-// ✅ Page principale avec navigation entre les écrans
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -72,9 +70,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0; // Index de la page sélectionnée
+  int _selectedIndex = 0;
 
-  // Liste des pages associées aux éléments du BottomNavigationBar
   final List<Widget> _pages = [
     Event(
       title: "50 CENT",
@@ -82,12 +79,11 @@ class _MyHomePageState extends State<MyHomePage> {
       description: "🔈 Le légendaire rappeur, producteur et entrepreneur 50 Cent revient à Paris pour un événement inoubliable !",
       date: "🗓️ Dimanche 13 juillet 2025",
     ),
-    EventMain(), // Page associée à l'icône Festival
-    Container(color: Colors.blue), // Placeholder pour Messenger
-    Container(color: Colors.green), // Placeholder pour Profil
+    EventMain(),
+    Container(color: Colors.blue),
+    Container(color: Colors.green),
   ];
 
-  // Fonction pour changer de page
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;

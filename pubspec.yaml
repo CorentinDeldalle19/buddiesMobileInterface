@@ -63,7 +63,9 @@ flutter:
      - assets/user-modified.png
      - assets/festival-modified.png
      - assets/home-modified.png
+     - assets/rechercher-modified.png
      - assets/50cent.jpeg
+     - assets/PLK.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
