@@ -12,7 +12,7 @@ Exigences :
 - Utilisation de Git (Gitlab ou Github)
 - Utilisation de Dio (Appel API REST)
 - Utilisation de Isar (ou autre, BDD locale)
--Utilisation de Riverpod (Injection dépendence)
+- Utilisation de Riverpod (Injection dépendence)
 - Affichage d'une image (URL ou Locale)
 
 
