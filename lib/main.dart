@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'Event.dart';
 import 'EventMain.dart';
+import 'MessagesPage.dart';
+import 'AccountPage.dart';
+import 'EventsPage.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Intl.defaultLocale = 'fr_FR'; // Définit la locale par défaut
   runApp(const MyApp());
 }
 
@@ -18,6 +27,14 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('fr', 'FR'),
+      ],
       home: const MyHomePage(),
     );
   }
@@ -71,30 +88,59 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+  List<Map<String, dynamic>> events = []; // Stocke les événements récupérés depuis l'API
+  List<Widget> _pages = []; // Pages pour la barre inférieure
 
-  final List<Widget> _pages = [
-    Event(
-      title: "50 CENT",
-      subtitle: "En concert à Paris !",
-      description: "🔈 Le légendaire rappeur, producteur et entrepreneur 50 Cent revient à Paris pour un événement inoubliable !",
-      date: "🗓️ Dimanche 13 juillet 2025",
-    ),
-    EventMain(),
-    Container(color: Colors.blue),
-    Container(color: Colors.green),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _fetchEvents();
+  }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  String formatDateToDayMonth(String dateStr) {
+    try {
+      final dateTime = DateTime.parse(dateStr);
+      final formatter = DateFormat('d MMMM', 'fr_FR');
+      return formatter.format(dateTime);
+    } catch (e) {
+      print('Erreur de parsing de date : $e');
+      return "Date inconnue";
+    }
+  }
+
+  Future<void> _fetchEvents() async {
+    try {
+      final dio = Dio();
+      print('Appel de l\'API...');
+      final response = await dio.get('https://backendbuddies-production.up.railway.app/api/events');
+
+      if (response.statusCode == 200) {
+        setState(() {
+          events = List<Map<String, dynamic>>.from(response.data);
+
+          // Initialisation des pages une fois les événements chargés
+          _pages = [
+            EventPage(events: events), // Page des événements avec gestion du swipe
+            const EventMain(), // Page principale des événements
+            MessagesPage(), // Page de messagerie
+            AccountPage(), // Page de gestion du compte
+          ];
+        });
+        print('Données récupérées : $events');
+      } else {
+        print('Échec API : Code ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erreur : $e');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    print('Contenu de _pages : $_pages'); // Débogage pour voir le contenu
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color.fromRGBO(71, 18, 89, 1),
@@ -104,11 +150,17 @@ class _MyHomePageState extends State<MyHomePage> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: _pages[_selectedIndex],
+        child: _pages.isNotEmpty
+            ? _pages[_selectedIndex]
+            : const Center(child: CircularProgressIndicator()),
       ),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
     );
   }

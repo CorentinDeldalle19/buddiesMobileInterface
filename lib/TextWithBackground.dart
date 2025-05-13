@@ -13,7 +13,7 @@ class TextWithBackground extends StatelessWidget {
     required this.backgroundColor,
     this.borderColor = Colors.transparent,
     this.borderWidth = 0.0,
-    this.boxShadow, // Permet de passer une ombre personnalisée
+    this.boxShadow,
   });
 
   @override
@@ -27,7 +27,7 @@ class TextWithBackground extends StatelessWidget {
           color: borderColor,
           width: borderWidth,
         ),
-        boxShadow: boxShadow ?? [], // Utilisation de l'ombre passée en paramètre
+        boxShadow: boxShadow ?? [],
       ),
       child: Text(
         text,

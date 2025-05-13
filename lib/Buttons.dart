@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'TextWithBackground.dart'; // Assurez-vous d'importer le fichier
+import 'TextWithBackground.dart';
 
 class Buttons extends StatelessWidget {
   final List<Map<String, dynamic>> buttonProps;
